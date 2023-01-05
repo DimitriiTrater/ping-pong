@@ -10,7 +10,6 @@ int main(int argc, char* argv[])
     
     const float STEPSIZE = 6.f; // step size for player
 
-
     float x = 400; // x spawn point ball
     float y = 300; // y spawn point ball
     
@@ -22,7 +21,11 @@ int main(int argc, char* argv[])
 
     sf::RenderWindow win(sf::VideoMode(WIDTH, HEIGHT), "ping-pong");
 
-    sf::CircleShape shape(0);
+    sf::CircleShape ball(0);
+    ball.setFillColor(sf::Color::White);
+    ball.setRadius(r);
+    ball.setOrigin(r, r);
+
 
     // first player create
     Player firstPlayer(0.f, 200.f);
@@ -53,7 +56,7 @@ int main(int argc, char* argv[])
                 std::cout << "log: gained focus" << std::endl;
         }
         
-
+        // ball move
         x += dx;
     	y += dy;
     	
@@ -66,21 +69,15 @@ int main(int argc, char* argv[])
         if ((x + r >= (secondPlayer.getX()+5)) && ((secondPlayer.getY() <= (y + r)) && ((y + r) <= (secondPlayer.getY() + 200.f))))
     	    dx = -dx;
 
-        win.clear(sf::Color::Black);
-
-        shape.setRadius(r);
-        shape.setOrigin(r, r);
-        shape.setPosition(x, y);
-        shape.setFillColor(sf::Color::White);
-        win.draw(shape);
-
-
         // standard position for ball
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::F2))
         {   
             x = 400.f;
-            y = 500.f;
+            y = 300.f;
         }
+
+        // set position for ball
+        ball.setPosition(x, y);
 
         // first player control
         if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W)) && !(firstPlayer.getY()-STEPSIZE <= 0))
@@ -89,11 +86,10 @@ int main(int argc, char* argv[])
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !(firstPlayer.getY()+STEPSIZE >= 400))
             firstPlayer.setY(firstPlayer.getY() + STEPSIZE);
 
-        // set position for first player
+        // set position for first player shape
         firstPlayerShape.setPosition(firstPlayer.getX(), firstPlayer.getY());
 
-        // draw first player shape
-        win.draw(firstPlayerShape);
+
 
         // second player control
         if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) && !(secondPlayer.getY()-STEPSIZE <= 0))
@@ -102,12 +98,21 @@ int main(int argc, char* argv[])
         if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) && !(secondPlayer.getY()+STEPSIZE >= 400))
             secondPlayer.setY(secondPlayer.getY() + STEPSIZE);
 
-        // set position for second player
+        // set position for second player shape
         secondPlayerShape.setPosition(secondPlayer.getX(), secondPlayer.getY());
 
+        // draw field
+        win.clear(sf::Color::Black);
+
+        // draw ball
+        win.draw(ball);
+
+        // draw first player shape
+        win.draw(firstPlayerShape);
+        
         // draw second player shape
         win.draw(secondPlayerShape);
-         
+
 
         win.display();
 
