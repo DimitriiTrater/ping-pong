@@ -23,9 +23,11 @@ int main(int argc, char* argv[])
 
     const sf::Color white = sf::Color::White; // white color
 
-    // text field
+    // font
     sf::Font font;
     font.loadFromFile("C:\\Users\\1\\CLionProjects\\game\\sansation.ttf");
+    
+    // text for score
     sf::Text textLeft;
     sf::Text textRight;
     textLeft.setFont(font);
@@ -38,6 +40,14 @@ int main(int argc, char* argv[])
     textRight.setFillColor(white);
     textLeft.setPosition(350.f, 0.f);
     textRight.setPosition(430.f, 0.f);
+
+    // text for win
+    sf::Text winText;
+    winText.setFont(font);
+    winText.setCharacterSize(50);
+    winText.setFillColor(white);
+    winText.setPosition(330.f, 200.f);
+    
 
 
 
@@ -121,8 +131,11 @@ int main(int argc, char* argv[])
             flagForPause = false;
         }
 
-//        if (firstWins == 11)
-//        if (secondWins == 11)
+        if (firstWins == 11)
+            winText.setString("Win left");
+       
+        if (secondWins == 11)
+            winText.setString("Win right");
 
 
         
@@ -194,6 +207,7 @@ int main(int argc, char* argv[])
         // draw text
         win.draw(textLeft);
         win.draw(textRight);
+        win.draw(winText);
 
         // draw ball
         win.draw(ballShape);
