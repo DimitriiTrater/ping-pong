@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "player/player.hpp"
+#include "ball/ball.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -24,23 +25,26 @@ int main(int argc, char* argv[])
     int firstWins = 0; // number of wins first player
     int secondWins = 0; // number of wins first player
 
-    sf::RenderWindow win(sf::VideoMode(WIDTH, HEIGHT), "ping-pong");
 
-    sf::CircleShape ball(0);
-    ball.setFillColor(sf::Color::White);
-    ball.setRadius(r);
-    ball.setOrigin(r, r);
+    // ball create
+    Ball ball(400.f, 300.f, 20.f);
+    sf::CircleShape ballShape(0);
+    ballShape.setFillColor(sf::Color::White);
+    ballShape.setRadius(ball.GetR());
+    ballShape.setOrigin(ball.GetR(), ball.GetR());
 
 
     // first player create
     Player firstPlayer(0.f, 200.f);
     sf::RectangleShape firstPlayerShape(sf::Vector2f(20.f, 200.f));
 
+
     // second player create
     Player secondPlayer(780.f, 200.f);
     sf::RectangleShape secondPlayerShape(sf::Vector2f(20.f, 200.f));
 
-
+    // win create
+    sf::RenderWindow win(sf::VideoMode(WIDTH, HEIGHT), "ping-pong");
     win.setFramerateLimit(60);
 
     while (win.isOpen())
@@ -118,8 +122,8 @@ int main(int argc, char* argv[])
             y = 300.f;
         }
 
-        // set position for ball
-        ball.setPosition(x, y);
+        // set position for ball shape
+        ballShape.setPosition(x, y);
 
 
         // first player control
@@ -149,7 +153,7 @@ int main(int argc, char* argv[])
         win.clear(sf::Color::Black);
 
         // draw ball
-        win.draw(ball);
+        win.draw(ballShape);
 
         // draw first player shape
         win.draw(firstPlayerShape);

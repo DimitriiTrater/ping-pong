@@ -12,13 +12,13 @@ private:
 public:
     Ball(float x, float y, float r);
     
-    void SetX(float x);
-    void SetY(float y);
-    void SetR(float r);
+    void setX(float x);
+    void setY(float y);
+    void setR(float r);
 
-    float GetX();
-    float GetY();
-    float GetR();
+    float getX();
+    float getY();
+    float getR();
 
 
 };

@@ -7,22 +7,22 @@ Ball::Ball(float x, float y, float r)
     this->r = r;
 }
 
-void Ball::SetX(float x)
+void Ball::setX(float x)
 {this->x = x;}
 
-void Ball::SetY(float y)
+void Ball::setY(float y)
 {this->y = y;}
 
-void Ball::SetR(float r)
+void Ball::setR(float r)
 {this->r = r;}
 
 
-float Ball::GetX()
+float Ball::getX()
 {return this->x;}
 
-float Ball::GetY()
+float Ball::getY()
 {return this->y;}
 
-float Ball::GetR()
+float Ball::getR()
 {return this->r;}
 
