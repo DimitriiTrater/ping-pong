@@ -79,6 +79,7 @@ int main(int argc, char* argv[])
         // set position for ball
         ball.setPosition(x, y);
 
+
         // first player control
         if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W)) && !(firstPlayer.getY()-STEPSIZE <= 0))
             firstPlayer.setY(firstPlayer.getY() - STEPSIZE);
@@ -88,7 +89,6 @@ int main(int argc, char* argv[])
 
         // set position for first player shape
         firstPlayerShape.setPosition(firstPlayer.getX(), firstPlayer.getY());
-
 
 
         // second player control
@@ -101,6 +101,15 @@ int main(int argc, char* argv[])
         // set position for second player shape
         secondPlayerShape.setPosition(secondPlayer.getX(), secondPlayer.getY());
 
+
+        // victory conditions
+        if (x + r > WIDTH)
+    		std::cout << "Win left" << std::endl;
+
+        if (x - r < 0)
+            std::cout << "Win right" << std::endl;
+        
+        
         // draw field
         win.clear(sf::Color::Black);
 
