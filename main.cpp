@@ -59,25 +59,10 @@ int main(int argc, char* argv[])
     		dy = -dy;
         
         if ((x + r <= (firstPlayer.getX()+50)) && ((firstPlayer.getY() <= (y + r)) && ((y + r) <= (firstPlayer.getY() + 200.f))))
-        {
     	    dx = -dx;
-            if (dy < 0)
-                dy = -(dy-0.2);
-            else
-                dy = -(dy+0.2);
-            //std::cout << "1.log: dy " << dy << std::endl;
-        }
         
         if ((x + r >= (secondPlayer.getX()+5)) && ((secondPlayer.getY() <= (y + r)) && ((y + r) <= (secondPlayer.getY() + 200.f))))
-        {
     	    dx = -dx;
-            if (dy < 0)
-                dy = -(dy-0.2);
-            else
-                dy = -(dy+0.2);
-            //std::cout << "2.log: dy " << dy << std::endl;
-            
-        }
 
         win.clear(sf::Color::Black);
 
