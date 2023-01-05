@@ -11,16 +11,11 @@ int main(int argc, char* argv[])
     
     const float STEPSIZE = 6.f; // step size for player
 
-    float x = 400; // x spawn point ball
-    float y = 300; // y spawn point ball
-    
-    float r = 20; // radius ball
-
     float dx = 6; // x speed ball
     float dy = 2; // y speed ball
 
-    bool flagForPause = false;
-    bool flagForLeftOrRightMoveBall = false;
+    bool flagForPause = false; // flag for pause after failure
+    bool flagForLeftOrRightMoveBall = false; // flag for left move or right move
 
     int firstWins = 0; // number of wins first player
     int secondWins = 0; // number of wins first player
@@ -30,8 +25,8 @@ int main(int argc, char* argv[])
     Ball ball(400.f, 300.f, 20.f);
     sf::CircleShape ballShape(0);
     ballShape.setFillColor(sf::Color::White);
-    ballShape.setRadius(ball.GetR());
-    ballShape.setOrigin(ball.GetR(), ball.GetR());
+    ballShape.setRadius(ball.getR());
+    ballShape.setOrigin(ball.getR(), ball.getR());
 
 
     // first player create
@@ -66,64 +61,64 @@ int main(int argc, char* argv[])
         }
 
         // victory conditions
-        if (x + r > WIDTH)
+        if (ball.getX() + ball.getR() > WIDTH)
         {
             dx = 0;
             dy = 0;
-            x = 400.f;
-            y = 300.f;
+            ball.setX(400.f);
+            ball.setY(300.f);
             flagForPause = true;
     		flagForLeftOrRightMoveBall = true;
             std::cout << "Win left" << std::endl;
         }
 
-        if (x - r < 0)
+        if (ball.getX() - ball.getR() < 0)
         {
             dx = 0;
             dy = 0;
-            x = 400.f;
-            y = 300.f;
+            ball.setX(400.f);
+            ball.setY(300.f);
             flagForPause = true;
             flagForLeftOrRightMoveBall = false;
             std::cout << "Win right" << std::endl;
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-            {
-                if (flagForLeftOrRightMoveBall)
-                    dx = 6;
-                else
-                    dx = -6;
-                dy = 2;
-                flagForPause = false;
-            }
+        {
+            if (flagForLeftOrRightMoveBall)
+                dx = 6;
+            else
+                dx = -6;
+            dy = 2;
+            flagForPause = false;
+        }
 
         
         // ball move
         if(!flagForPause)
         {
-            x += dx;
-    	    y += dy;
-    	}
+    	    ball.setX(ball.getX()+dx);
+    	    ball.setY(ball.getY()+dy);
+        }
         
-        if ((y + r > HEIGHT) || (y - r < 0))
+        if ((ball.getY() + ball.getR() > HEIGHT) || (ball.getY() - ball.getR() < 0))
     		dy = -dy;
         
-        if ((x + r <= (firstPlayer.getX()+50)) && ((firstPlayer.getY() <= (y + r)) && ((y + r) <= (firstPlayer.getY() + 200.f))))
+        if ((ball.getX() + ball.getR() <= (firstPlayer.getX()+50)) && ((firstPlayer.getY() <= (ball.getY() + ball.getR())) && ((ball.getY() + ball.getR()) <= (firstPlayer.getY() + 200.f))))
     	    dx = -dx;
         
-        if ((x + r >= (secondPlayer.getX()+5)) && ((secondPlayer.getY() <= (y + r)) && ((y + r) <= (secondPlayer.getY() + 200.f))))
+        if ((ball.getX() + ball.getR() >= (secondPlayer.getX()+5)) && ((secondPlayer.getY() <= (ball.getY() + ball.getR())) && ((ball.getY() + ball.getR()) <= (secondPlayer.getY() + 200.f))))
     	    dx = -dx;
 
         // standard position for ball
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::F2))
         {   
-            x = 400.f;
-            y = 300.f;
+            ball.setX(400.f);
+            ball.setY(300.f);
         }
 
         // set position for ball shape
-        ballShape.setPosition(x, y);
+        ballShape.setPosition(ball.getX(), ball.getY());
 
 
         // first player control
