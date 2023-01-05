@@ -20,6 +20,25 @@ int main(int argc, char* argv[])
     int firstWins = 0; // number of wins first player
     int secondWins = 0; // number of wins first player
 
+    const sf::Color white = sf::Color::White; // white color
+
+    // text field
+    sf::Font font;
+    font.loadFromFile("C:\\Users\\1\\CLionProjects\\game\\sansation.ttf");
+    sf::Text textLeft;
+    sf::Text textRight;
+    textLeft.setFont(font);
+    textRight.setFont(font);
+    textLeft.setString(std::to_string(firstWins));
+    textRight.setString(std::to_string(secondWins));
+    textLeft.setCharacterSize(24);
+    textRight.setCharacterSize(24);
+    textLeft.setFillColor(white);
+    textRight.setFillColor(white);
+    textLeft.setPosition(350.f, 0.f);
+    textRight.setPosition(430.f, 0.f);
+
+
 
     // ball create
     Ball ball(400.f, 300.f, 20.f);
@@ -60,6 +79,10 @@ int main(int argc, char* argv[])
                 std::cout << "log: gained focus" << std::endl;
         }
 
+        // text update
+        textLeft.setString(std::to_string(firstWins));
+        textRight.setString(std::to_string(secondWins));
+
         // victory conditions
         if (ball.getX() + ball.getR() > WIDTH)
         {
@@ -70,6 +93,7 @@ int main(int argc, char* argv[])
             flagForPause = true;
     		flagForLeftOrRightMoveBall = true;
             std::cout << "Win left" << std::endl;
+            firstWins++;
         }
 
         if (ball.getX() - ball.getR() < 0)
@@ -81,6 +105,7 @@ int main(int argc, char* argv[])
             flagForPause = true;
             flagForLeftOrRightMoveBall = false;
             std::cout << "Win right" << std::endl;
+            secondWins++;
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
@@ -92,6 +117,10 @@ int main(int argc, char* argv[])
             dy = 2;
             flagForPause = false;
         }
+
+        if (firstWins == 11)
+        if (secondWins == 11)
+
 
         
         // ball move
@@ -146,6 +175,10 @@ int main(int argc, char* argv[])
 
         // draw field
         win.clear(sf::Color::Black);
+
+        // draw text
+        win.draw(textLeft);
+        win.draw(textRight);
 
         // draw ball
         win.draw(ballShape);
