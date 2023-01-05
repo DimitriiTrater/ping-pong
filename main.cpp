@@ -18,6 +18,11 @@ int main(int argc, char* argv[])
     float dx = 6; // x speed ball
     float dy = 2; // y speed ball
 
+    bool flagForPause = false;
+    bool flagForLeftOrRightMoveBall = false;
+
+    int firstWins = 0; // number of wins first player
+    int secondWins = 0; // number of wins first player
 
     sf::RenderWindow win(sf::VideoMode(WIDTH, HEIGHT), "ping-pong");
 
@@ -55,11 +60,48 @@ int main(int argc, char* argv[])
             if (event.type == sf::Event::GainedFocus)
                 std::cout << "log: gained focus" << std::endl;
         }
+
+        // victory conditions
+        if (x + r > WIDTH)
+        {
+            dx = 0;
+            dy = 0;
+            x = 400.f;
+            y = 300.f;
+            flagForPause = true;
+    		flagForLeftOrRightMoveBall = true;
+            std::cout << "Win left" << std::endl;
+        }
+
+        if (x - r < 0)
+        {
+            dx = 0;
+            dy = 0;
+            x = 400.f;
+            y = 300.f;
+            flagForPause = true;
+            flagForLeftOrRightMoveBall = false;
+            std::cout << "Win right" << std::endl;
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+            {
+                if (flagForLeftOrRightMoveBall)
+                    dx = 6;
+                else
+                    dx = -6;
+                dy = 2;
+                flagForPause = false;
+            }
+
         
         // ball move
-        x += dx;
-    	y += dy;
-    	
+        if(!flagForPause)
+        {
+            x += dx;
+    	    y += dy;
+    	}
+        
         if ((y + r > HEIGHT) || (y - r < 0))
     		dy = -dy;
         
@@ -102,14 +144,7 @@ int main(int argc, char* argv[])
         secondPlayerShape.setPosition(secondPlayer.getX(), secondPlayer.getY());
 
 
-        // victory conditions
-        if (x + r > WIDTH)
-    		std::cout << "Win left" << std::endl;
 
-        if (x - r < 0)
-            std::cout << "Win right" << std::endl;
-        
-        
         // draw field
         win.clear(sf::Color::Black);
 
