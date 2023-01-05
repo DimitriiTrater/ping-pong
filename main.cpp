@@ -5,8 +5,8 @@
 
 int main(int argc, char* argv[])
 {
-    const int W = 800; 
-    const int H = 600;
+    const int WIDTH = 800; // window width
+    const int HEIGHT = 600; // window height
     
     const float STEPSIZE = 6.f; // step size for player
 
@@ -16,11 +16,11 @@ int main(int argc, char* argv[])
     
     float r = 20; // radius ball
 
-    float dx = 4; // x speed ball
+    float dx = 6; // x speed ball
     float dy = 2; // y speed ball
 
 
-    sf::RenderWindow win(sf::VideoMode(W, H), "ping-pong");
+    sf::RenderWindow win(sf::VideoMode(WIDTH, HEIGHT), "ping-pong");
 
     sf::CircleShape shape(0);
 
@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
         x += dx;
     	y += dy;
     	
-        if ((y + r > H) || (y - r < 0))
+        if ((y + r > HEIGHT) || (y - r < 0))
     		dy = -dy;
         
         if ((x + r <= (firstPlayer.getX()+50)) && ((firstPlayer.getY() <= (y + r)) && ((y + r) <= (firstPlayer.getY() + 200.f))))
