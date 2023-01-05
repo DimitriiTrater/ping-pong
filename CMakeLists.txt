@@ -20,9 +20,9 @@ set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake_modules")
 find_package(SFML 2.5 REQUIRED graphics network audio window system)
 
 add_executable(
-    ping-pong "main.cpp"
+    ping-pong           main.cpp
 
-    player.hpp player.cpp
+    player/player.hpp   player/player.cpp
 )
 
 target_link_libraries(ping-pong sfml-graphics)
