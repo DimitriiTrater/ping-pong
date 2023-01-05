@@ -7,6 +7,9 @@ int main(int argc, char* argv[])
 {
     const int W = 800; 
     const int H = 600;
+    
+    const float STEPSIZE = 6.f; // step size for player
+
 
     float x = 400; // x spawn point ball
     float y = 300; // y spawn point ball
@@ -16,17 +19,16 @@ int main(int argc, char* argv[])
     float dx = 4; // x speed ball
     float dy = 2; // y speed ball
 
-    float stepSize = 6.f; // step size for player
 
     sf::RenderWindow win(sf::VideoMode(W, H), "ping-pong");
 
     sf::CircleShape shape(0);
 
-    // first player
+    // first player create
     Player firstPlayer(0.f, 200.f);
     sf::RectangleShape firstPlayerShape(sf::Vector2f(20.f, 200.f));
 
-    // second player
+    // second player create
     Player secondPlayer(780.f, 200.f);
     sf::RectangleShape secondPlayerShape(sf::Vector2f(20.f, 200.f));
 
@@ -78,23 +80,23 @@ int main(int argc, char* argv[])
             y = 500.f;
         }
 
-        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W)) && !(firstPlayer.getY()-stepSize <= 0))
-            firstPlayer.setY(firstPlayer.getY() - stepSize);
+        // first player control
+        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W)) && !(firstPlayer.getY()-STEPSIZE <= 0))
+            firstPlayer.setY(firstPlayer.getY() - STEPSIZE);
 
-        
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !(firstPlayer.getY()+stepSize >= 400))
-            firstPlayer.setY(firstPlayer.getY() + stepSize);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !(firstPlayer.getY()+STEPSIZE >= 400))
+            firstPlayer.setY(firstPlayer.getY() + STEPSIZE);
 
         firstPlayerShape.setPosition(firstPlayer.getX(), firstPlayer.getY());
 
         win.draw(firstPlayerShape);
 
-
-        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) && !(secondPlayer.getY()-stepSize <= 0))
-            secondPlayer.setY(secondPlayer.getY() - stepSize);
+        // second player control
+        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) && !(secondPlayer.getY()-STEPSIZE <= 0))
+            secondPlayer.setY(secondPlayer.getY() - STEPSIZE);
         
-        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) && !(secondPlayer.getY()+stepSize >= 400))
-            secondPlayer.setY(secondPlayer.getY() + stepSize);
+        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) && !(secondPlayer.getY()+STEPSIZE >= 400))
+            secondPlayer.setY(secondPlayer.getY() + STEPSIZE);
 
         secondPlayerShape.setPosition(secondPlayer.getX(), secondPlayer.getY());
 
