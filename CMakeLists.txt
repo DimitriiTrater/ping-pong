@@ -21,6 +21,8 @@ find_package(SFML 2.5 REQUIRED graphics network audio window system)
 
 add_executable(
     ping-pong "main.cpp"
+
+    player.hpp player.cpp
 )
 
 target_link_libraries(ping-pong sfml-graphics)
