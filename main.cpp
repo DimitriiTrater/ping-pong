@@ -74,6 +74,8 @@ int main(int argc, char* argv[])
         shape.setFillColor(sf::Color::White);
         win.draw(shape);
 
+
+        // standard position for ball
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::F2))
         {   
             x = 400.f;
@@ -87,8 +89,10 @@ int main(int argc, char* argv[])
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !(firstPlayer.getY()+STEPSIZE >= 400))
             firstPlayer.setY(firstPlayer.getY() + STEPSIZE);
 
+        // set position for first player
         firstPlayerShape.setPosition(firstPlayer.getX(), firstPlayer.getY());
 
+        // draw first player shape
         win.draw(firstPlayerShape);
 
         // second player control
@@ -98,8 +102,10 @@ int main(int argc, char* argv[])
         if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) && !(secondPlayer.getY()+STEPSIZE >= 400))
             secondPlayer.setY(secondPlayer.getY() + STEPSIZE);
 
+        // set position for second player
         secondPlayerShape.setPosition(secondPlayer.getX(), secondPlayer.getY());
 
+        // draw second player shape
         win.draw(secondPlayerShape);
          
 
