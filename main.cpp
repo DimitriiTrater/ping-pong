@@ -13,6 +13,7 @@ int main(int argc, char* argv[])
 
     float dx = 6; // x speed ball
     float dy = 2; // y speed ball
+    float extraSpeed = 0; // extra speed for dx
 
     bool flagForPause = false; // flag for pause after failure
     bool flagForLeftOrRightMoveBall = false; // flag for left move or right move
@@ -86,6 +87,7 @@ int main(int argc, char* argv[])
         // victory conditions
         if (ball.getX() + ball.getR() > WIDTH)
         {
+            extraSpeed = 0;
             dx = 0;
             dy = 0;
             ball.setX(400.f);
@@ -98,6 +100,7 @@ int main(int argc, char* argv[])
 
         if (ball.getX() - ball.getR() < 0)
         {
+            extraSpeed = 0;
             dx = 0;
             dy = 0;
             ball.setX(400.f);
@@ -118,8 +121,8 @@ int main(int argc, char* argv[])
             flagForPause = false;
         }
 
-        if (firstWins == 11)
-        if (secondWins == 11)
+//        if (firstWins == 11)
+//        if (secondWins == 11)
 
 
         
@@ -131,13 +134,26 @@ int main(int argc, char* argv[])
         }
         
         if ((ball.getY() + ball.getR() > HEIGHT) || (ball.getY() - ball.getR() < 0))
-    		dy = -dy;
+            dy = -dy;
         
         if ((ball.getX() + ball.getR() <= (firstPlayer.getX()+50)) && ((firstPlayer.getY() <= (ball.getY() + ball.getR())) && ((ball.getY() + ball.getR()) <= (firstPlayer.getY() + 200.f))))
-    	    dx = -dx;
-        
+    	{   
+            extraSpeed += 0.1;
+            if (dx < 0) 
+                dx = -(dx - extraSpeed);
+            else if (dx > 0)
+                dx = -(dx + extraSpeed);
+        }
+
         if ((ball.getX() + ball.getR() >= (secondPlayer.getX()+5)) && ((secondPlayer.getY() <= (ball.getY() + ball.getR())) && ((ball.getY() + ball.getR()) <= (secondPlayer.getY() + 200.f))))
-    	    dx = -dx;
+    	{   
+            extraSpeed += 0.1;
+            if (dx < 0) 
+                dx = -(dx - extraSpeed);
+            else if (dx > 0)
+                dx = -(dx + extraSpeed);
+        }
+
 
         // standard position for ball
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::F2))
@@ -170,7 +186,6 @@ int main(int argc, char* argv[])
 
         // set position for second player shape
         secondPlayerShape.setPosition(secondPlayer.getX(), secondPlayer.getY());
-
 
 
         // draw field
