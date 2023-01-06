@@ -1,19 +1,11 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
-
 #include "player/player.hpp"
 #include "player_control/player_control.hpp"
 
 #include "ball/ball.hpp"
-
-
-
-void collisionBallY(float& dy, Ball& ball, int HEIGHT)
-{
-    if ((ball.getY() + ball.getR() > HEIGHT) || (ball.getY() - ball.getR() < 0))
-        dy = -dy;
-}
+#include "ball_collision/ball_collision.hpp"
 
 
 int main(int argc, char* argv[])
@@ -156,24 +148,9 @@ int main(int argc, char* argv[])
         
         collisionBallY(dy, ball, HEIGHT);
         
-        if ((ball.getX() + ball.getR() <= (firstPlayer.getX()+50)) && ((firstPlayer.getY() <= (ball.getY() + ball.getR())) && ((ball.getY() + ball.getR()) <= (firstPlayer.getY() + 200.f))))
-    	{   
-            extraSpeed += 0.1;
-            if (dx < 0) 
-                dx = -(dx - extraSpeed);
-            else if (dx > 0)
-                dx = -(dx + extraSpeed);
-        }
+        collisionBallXForLeft(dx, ball, firstPlayer, extraSpeed);
 
-        if ((ball.getX() + ball.getR() >= (secondPlayer.getX()+5)) && ((secondPlayer.getY() <= (ball.getY() + ball.getR())) && ((ball.getY() + ball.getR()) <= (secondPlayer.getY() + 200.f))))
-    	{   
-            extraSpeed += 0.1;
-            if (dx < 0) 
-                dx = -(dx - extraSpeed);
-            else if (dx > 0)
-                dx = -(dx + extraSpeed);
-        }
-
+        collisionBallXForRight(dx, ball, secondPlayer, extraSpeed);
 
         // standard position for ball
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::F2))
