@@ -1,5 +1,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <random>
+#include <chrono>
 
 #include "player/player.hpp"
 #include "player_control/player_control.hpp"
@@ -7,6 +9,13 @@
 #include "ball/ball.hpp"
 #include "ball_collision/ball_collision.hpp"
 
+void setParametersTextScore(sf::Text& text, const sf::Color color, sf::Font& font, int size, float x, float y)
+{
+    text.setFont(font);
+    text.setCharacterSize(size);
+    text.setFillColor(color);
+    text.setPosition(x, y);
+}
 
 int main(int argc, char* argv[])
 {
@@ -15,17 +24,25 @@ int main(int argc, char* argv[])
     
     const float STEPSIZE = 6.f; // step size for player
 
-    float dx = 6; // x speed ball
-    float dy = 2; // y speed ball
+    float dx = 0; // x speed ball
+    float dy = 0; // y speed ball
     float extraSpeed = 0; // extra speed for dx
 
     bool flagForPause = false; // flag for pause after failure
-    bool flagForLeftOrRightMoveBall = false; // flag for left move or right move
+    bool flagDown = false; // ball not in window
+    bool newGame = true; // for new game
+    bool gameOver = false; // for game over
 
     int firstWins = 0; // number of wins first player
     int secondWins = 0; // number of wins first player
 
+    int leftOrRight = 0; // 1 - right | 2 - left
+
     const sf::Color white = sf::Color::White; // white color
+
+    unsigned seed = std::chrono::steady_clock::now().time_since_epoch().count(); // seed
+    std::default_random_engine eng(seed);
+
 
     // font
     sf::Font font;
@@ -34,22 +51,31 @@ int main(int argc, char* argv[])
     // text for score
     sf::Text textLeft;
     sf::Text textRight;
-    textLeft.setFont(font);
-    textRight.setFont(font);
-    textLeft.setCharacterSize(24);
-    textRight.setCharacterSize(24);
-    textLeft.setFillColor(white);
-    textRight.setFillColor(white);
-    textLeft.setPosition(350.f, 0.f);
-    textRight.setPosition(430.f, 0.f);
+    setParametersTextScore(textLeft, white, font, 24, 350.f, 0.f);
+    setParametersTextScore(textRight, white, font, 24, 430.f, 0.f);
 
     // text for win
     sf::Text winText;
     winText.setFont(font);
     winText.setCharacterSize(50);
     winText.setFillColor(white);
-    winText.setPosition(330.f, 200.f);
-    
+    winText.setPosition(310.f, 200.f);
+
+    // text new game instructions
+    sf::Text newGameInstructions;
+    newGameInstructions.setFont(font);
+    newGameInstructions.setCharacterSize(40);
+    newGameInstructions.setFillColor(white);
+    newGameInstructions.setPosition(240.f, 200.f);
+    newGameInstructions.setString("start game - space");
+
+
+    // text end game instructions
+    sf::Text endGameInstructions;
+    endGameInstructions.setFont(font);
+    endGameInstructions.setCharacterSize(40);
+    endGameInstructions.setFillColor(white);
+    endGameInstructions.setPosition(240.f, 400.f);
 
     // ball create
     Ball ball(400.f, 300.f, 20.f);
@@ -97,47 +123,64 @@ int main(int argc, char* argv[])
         // victory conditions
         if (ball.getX() + ball.getR() > WIDTH)
         {
+            leftOrRight = 1;
+            flagDown = true;
             extraSpeed = 0;
             dx = 0;
             dy = 0;
             ball.setX(400.f);
             ball.setY(300.f);
-            flagForPause = true;
-    		flagForLeftOrRightMoveBall = true;
             std::cout << "Win left" << std::endl;
             firstWins++;
         }
 
         if (ball.getX() - ball.getR() < 0)
         {
+            leftOrRight = 2;
+            flagDown = true;
             extraSpeed = 0;
             dx = 0;
             dy = 0;
             ball.setX(400.f);
             ball.setY(300.f);
-            flagForPause = true;
-            flagForLeftOrRightMoveBall = false;
             std::cout << "Win right" << std::endl;
             secondWins++;
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && (flagDown || newGame) && !gameOver)
         {
-            if (flagForLeftOrRightMoveBall)
+            newGameInstructions.setString("");
+            flagDown = false;
+            if (eng()%2 && newGame) // for 1
+            {
+                newGame = false;
                 dx = 6;
-            else
+            }
+            else if (!(eng()%2) && newGame) // for 0
+            {    
+                newGame = false;
+                dx = -6;
+            }
+            if (leftOrRight == 1)
+                dx = 6;
+            if (leftOrRight == 2)
                 dx = -6;
             dy = 2;
-            flagForPause = false;
         }
 
         if (firstWins == 11)
+        {
             winText.setString("Win left");
-       
+            gameOver = true;
+            endGameInstructions.setString("restart game - F2");
+        }
+
         if (secondWins == 11)
+        {
             winText.setString("Win right");
-
-
+            gameOver = true;
+            endGameInstructions.setString("restart game - F2");
+        }
         
         // ball move
         if(!flagForPause)
@@ -146,15 +189,22 @@ int main(int argc, char* argv[])
     	    ball.setY(ball.getY()+dy);
         }
         
+        // collision ball
         collisionBallY(dy, ball, HEIGHT);
-        
         collisionBallXForLeft(dx, ball, firstPlayer, extraSpeed);
-
         collisionBallXForRight(dx, ball, secondPlayer, extraSpeed);
 
+
         // standard position for ball
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::F2))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::F2) && gameOver)
         {   
+            newGame = true;
+            gameOver = false;
+            newGameInstructions.setString("start game - space");
+            endGameInstructions.setString("");
+            winText.setString("");
+            firstWins = 0;
+            secondWins = 0;
             ball.setX(400.f);
             ball.setY(300.f);
         }
@@ -165,7 +215,6 @@ int main(int argc, char* argv[])
 
         // first player control
         playerControll(firstPlayer, STEPSIZE, sf::Keyboard::W, sf::Keyboard::S);
-
 
         // set position for first player shape
         firstPlayerShape.setPosition(firstPlayer.getX(), firstPlayer.getY());
@@ -185,6 +234,8 @@ int main(int argc, char* argv[])
         win.draw(textLeft);
         win.draw(textRight);
         win.draw(winText);
+        win.draw(newGameInstructions);
+        win.draw(endGameInstructions);
 
         // draw ball
         win.draw(ballShape);
