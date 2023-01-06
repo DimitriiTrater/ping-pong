@@ -19,7 +19,7 @@ void collisionBallXForLeft(float& dx, Ball& ball, Player& firstPlayer, float& ex
 
 void collisionBallXForRight(float& dx, Ball& ball, Player& secondPlayer, float& extraSpeed)
 {
-    if ((ball.getX() + ball.getR() >= (secondPlayer.getX()+5)) && ((secondPlayer.getY() <= (ball.getY() + ball.getR())) && ((ball.getY() + ball.getR()) <= (secondPlayer.getY() + 200.f))))
+    if ((ball.getX() + ball.getR() >= (secondPlayer.getX()-3)) && ((secondPlayer.getY() <= (ball.getY() + ball.getR())) && ((ball.getY() + ball.getR()) <= (secondPlayer.getY() + 200.f))))
     {   
         extraSpeed += 0.1;
         if (dx < 0) 
