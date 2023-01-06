@@ -42,8 +42,6 @@ int main(int argc, char* argv[])
     sf::Text textRight;
     textLeft.setFont(font);
     textRight.setFont(font);
-    textLeft.setString(std::to_string(firstWins));
-    textRight.setString(std::to_string(secondWins));
     textLeft.setCharacterSize(24);
     textRight.setCharacterSize(24);
     textLeft.setFillColor(white);
@@ -62,7 +60,7 @@ int main(int argc, char* argv[])
     // ball create
     Ball ball(400.f, 300.f, 20.f);
     sf::CircleShape ballShape(0);
-    ballShape.setFillColor(sf::Color::White);
+    ballShape.setFillColor(white);
     ballShape.setRadius(ball.getR());
     ballShape.setOrigin(ball.getR(), ball.getR());
 
