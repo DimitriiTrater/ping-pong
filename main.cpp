@@ -1,7 +1,10 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
+
 #include "player/player.hpp"
+#include "player_control/player_control.hpp"
+
 #include "ball/ball.hpp"
 
 
@@ -11,7 +14,6 @@ void collisionBallY(float& dy, Ball& ball, int HEIGHT)
     if ((ball.getY() + ball.getR() > HEIGHT) || (ball.getY() - ball.getR() < 0))
         dy = -dy;
 }
-
 
 
 int main(int argc, char* argv[])
@@ -185,22 +187,15 @@ int main(int argc, char* argv[])
 
 
         // first player control
-        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W)) && !(firstPlayer.getY()-STEPSIZE <= 0))
-            firstPlayer.setY(firstPlayer.getY() - STEPSIZE);
+        playerControll(firstPlayer, STEPSIZE, sf::Keyboard::W, sf::Keyboard::S);
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !(firstPlayer.getY()+STEPSIZE >= 400))
-            firstPlayer.setY(firstPlayer.getY() + STEPSIZE);
 
         // set position for first player shape
         firstPlayerShape.setPosition(firstPlayer.getX(), firstPlayer.getY());
 
 
         // second player control
-        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) && !(secondPlayer.getY()-STEPSIZE <= 0))
-            secondPlayer.setY(secondPlayer.getY() - STEPSIZE);
-        
-        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) && !(secondPlayer.getY()+STEPSIZE >= 400))
-            secondPlayer.setY(secondPlayer.getY() + STEPSIZE);
+        playerControll(secondPlayer, STEPSIZE, sf::Keyboard::Up, sf::Keyboard::Down);
 
         // set position for second player shape
         secondPlayerShape.setPosition(secondPlayer.getX(), secondPlayer.getY());

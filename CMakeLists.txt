@@ -25,6 +25,8 @@ add_executable(
     player/player.hpp   player/player.cpp
 
     ball/ball.hpp       ball/ball.cpp
+
+    player_control/player_control.hpp player_control/player_control.cpp
 )
 
 target_link_libraries(ping-pong sfml-graphics)
