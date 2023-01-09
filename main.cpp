@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
 
     // font
     sf::Font font;
-    font.loadFromFile("C:\\Users\\1\\CLionProjects\\game\\sansation.ttf");
+    font.loadFromFile("sansation.ttf");
     
     // text for score
     sf::Text textLeft;
