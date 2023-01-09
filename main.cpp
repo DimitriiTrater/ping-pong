@@ -42,6 +42,9 @@ int main(int argc, char* argv[])
 
     unsigned seed = std::chrono::steady_clock::now().time_since_epoch().count(); // seed
     std::default_random_engine eng(seed);
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_int_distribution<int> dist(-6, 6);
 
 
     // font
@@ -161,11 +164,16 @@ int main(int argc, char* argv[])
                 newGame = false;
                 dx = -6;
             }
+            
             if (leftOrRight == 1)
                 dx = 6;
+            
             if (leftOrRight == 2)
                 dx = -6;
-            dy = 2;
+            //dy = dist(mt);
+            dy = 0;
+            // if (dy == 0)
+            //     dy++;
         }
 
         if (firstWins == 11)
