@@ -9,6 +9,8 @@
 #include "ball/ball.hpp"
 #include "ball_collision/ball_collision.hpp"
 
+#include "font/sansation.hpp"
+
 void setParametersTextScore(sf::Text& text, const sf::Color color, sf::Font& font, int size, float x, float y)
 {
     text.setFont(font);
@@ -49,7 +51,7 @@ int main(int argc, char* argv[])
 
     // font
     sf::Font font;
-    font.loadFromFile("sansation.ttf");
+    font.loadFromMemory(&sansation_ttf, sansation_ttf_len);
     
     // text for score
     sf::Text textLeft;
@@ -109,14 +111,14 @@ int main(int argc, char* argv[])
             if (event.type == sf::Event::Closed) 
             {
                 win.close();
-                std::cout << "log: win closed" << std::endl;
+                //std::cout << "log: win closed" << std::endl;
             }
 
-            if (event.type == sf::Event::LostFocus)
-                std::cout << "log: lost focus" << std::endl;
+            //if (event.type == sf::Event::LostFocus)
+                //std::cout << "log: lost focus" << std::endl;
 
-            if (event.type == sf::Event::GainedFocus)
-                std::cout << "log: gained focus" << std::endl;
+            //if (event.type == sf::Event::GainedFocus)
+                //std::cout << "log: gained focus" << std::endl;
         }
 
         // text update
@@ -133,7 +135,7 @@ int main(int argc, char* argv[])
             dy = 0;
             ball.setX(400.f);
             ball.setY(300.f);
-            std::cout << "Win left" << std::endl;
+            //std::cout << "Win left" << std::endl;
             firstWins++;
         }
 
@@ -146,7 +148,7 @@ int main(int argc, char* argv[])
             dy = 0;
             ball.setX(400.f);
             ball.setY(300.f);
-            std::cout << "Win right" << std::endl;
+            //std::cout << "Win right" << std::endl;
             secondWins++;
         }
 
@@ -157,23 +159,22 @@ int main(int argc, char* argv[])
             if (eng()%2 && newGame) // for 1
             {
                 newGame = false;
-                dx = 6;
+                dx = 10;
             }
             else if (!(eng()%2) && newGame) // for 0
             {    
                 newGame = false;
-                dx = -6;
+                dx = -10;
             }
             
             if (leftOrRight == 1)
-                dx = 6;
+                dx = 10;
             
             if (leftOrRight == 2)
-                dx = -6;
-            //dy = dist(mt);
-            dy = 0;
-            // if (dy == 0)
-            //     dy++;
+                dx = -10;
+            dy = dist(mt);
+            if (dy == 0)
+                dy++;
         }
 
         if (firstWins == 11)
