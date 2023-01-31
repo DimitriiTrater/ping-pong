@@ -8,7 +8,7 @@ Hello, everyone. It's a my pet-project game.
 In this game you can play with your friend, cuz the game for two players.  
 In game we have left player (left brick) and right player (right brick).  
 Game has ball, which move right or left.  
-When ball touches left or right brick, the ball is accelerating until it hits a brick.
+When ball touches left or right brick, the ball is accelerating.
 When left or right score is 11 - game over.  
 
 ## Contributions
@@ -19,7 +19,7 @@ If you want to improve this game - create fork and just do it (my code is not a 
 ## Please
 
 I'm a creator of this code and I was tearing my hair out while writing it.  
-Thus, if you want to use this code - you can, but don't forget about that you didn't write this code.  
+Thus, if you want to use this code - you can.
 Let's just respect each other.  
 Atari is cool.
 
@@ -37,7 +37,7 @@ Atari is cool.
 В эту игру вы можете играть с другом, потому что она на двоих.  
 В игре у нас есть левый игрок (кирпичик слева) и правый игрок (кирпичик справа).  
 Так же в игре есть мячик, который может двигаться вправо и влево.  
-Каждый раз когда мячик ударяется об какой-нибудь из кирпичиков, он ускоряется до тех пор, пока не пробьёт одну из плиток.  
+Каждый раз когда мячик ударяется об какой-нибудь из кирпичиков, он ускоряется.
 Когда счёт одного из игроков достигнет 11 - игра закончится.  
 
 ## Участие в проекте
@@ -49,6 +49,5 @@ Atari is cool.
 
 Я написал этот код. И пока писал - повыдёргивал себе все волосы на голове.  
 Поэтому, если вы хотите использовать его, то пожалуйста.  
-Но не забывайте о том, что у него есть создатель.
 Давайте просто уважать друг друга.  
 Атари это круто.
