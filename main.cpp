@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
     std::default_random_engine eng(seed);
     std::random_device rd;
     std::mt19937 mt(rd());
-    std::uniform_int_distribution<int> dist(-6, 6);
+    std::uniform_int_distribution<int> dist(-10, 10);
 
 
     // font
@@ -159,19 +159,19 @@ int main(int argc, char* argv[])
             if (eng()%2 && newGame) // for 1
             {
                 newGame = false;
-                dx = 10;
+                dx = 12;
             }
             else if (!(eng()%2) && newGame) // for 0
             {    
                 newGame = false;
-                dx = -10;
+                dx = -12;
             }
             
             if (leftOrRight == 1)
-                dx = 10;
+                dx = 12;
             
             if (leftOrRight == 2)
-                dx = -10;
+                dx = -12;
             dy = dist(mt);
             if (dy == 0)
                 dy++;
